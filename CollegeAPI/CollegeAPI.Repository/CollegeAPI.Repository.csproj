@@ -1,5 +1,10 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
+  <ItemGroup>
+    <ProjectReference Include="..\CollegeAPI.Contracts\CollegeAPI.Contracts.csproj" />
+    <ProjectReference Include="..\CollegeAPI.Data\CollegeAPI.Data.csproj" />
+  </ItemGroup>
+
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
   </PropertyGroup>
