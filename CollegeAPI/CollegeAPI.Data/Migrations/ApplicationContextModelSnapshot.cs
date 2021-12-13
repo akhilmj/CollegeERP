@@ -26,28 +26,27 @@ namespace CollegeAPI.Data.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("ClassTeacherId")
-                        .HasColumnType("int");
-
                     b.Property<string>("CourseName")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("CreatedBy")
+                    b.Property<int?>("CreatedBy")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("CreatedDate")
+                    b.Property<DateTime?>("CreatedDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("IsActive")
+                    b.Property<int?>("IsActive")
                         .HasColumnType("int");
 
-                    b.Property<int>("UpdatedBy")
+                    b.Property<int?>("UpdatedBy")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("updatedDate")
+                    b.Property<DateTime?>("updatedDate")
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("CreatedBy");
 
                     b.ToTable("classes");
                 });
@@ -62,19 +61,19 @@ namespace CollegeAPI.Data.Migrations
                     b.Property<string>("Address")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("ClassId")
+                    b.Property<int?>("ClassId")
                         .HasColumnType("int");
 
-                    b.Property<int>("CreatedBy")
+                    b.Property<int?>("CreatedBy")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("CreatedDate")
+                    b.Property<DateTime?>("CreatedDate")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Email")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("IsActive")
+                    b.Property<int?>("IsActive")
                         .HasColumnType("int");
 
                     b.Property<string>("Name")
@@ -83,15 +82,17 @@ namespace CollegeAPI.Data.Migrations
                     b.Property<string>("Phone")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("UpdatedBy")
+                    b.Property<int?>("UpdatedBy")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("updatedDate")
+                    b.Property<DateTime?>("updatedDate")
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
 
                     b.HasIndex("ClassId");
+
+                    b.HasIndex("CreatedBy");
 
                     b.ToTable("student");
                 });
@@ -103,16 +104,16 @@ namespace CollegeAPI.Data.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("ClassId")
+                    b.Property<int?>("ClassId")
                         .HasColumnType("int");
 
-                    b.Property<int>("CreatedBy")
+                    b.Property<int?>("CreatedBy")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("CreatedDate")
+                    b.Property<DateTime?>("CreatedDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("IsActive")
+                    b.Property<int?>("IsActive")
                         .HasColumnType("int");
 
                     b.Property<string>("SubjectName")
@@ -121,15 +122,17 @@ namespace CollegeAPI.Data.Migrations
                     b.Property<int>("TeacherId")
                         .HasColumnType("int");
 
-                    b.Property<int>("UpdatedBy")
+                    b.Property<int?>("UpdatedBy")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("updatedDate")
+                    b.Property<DateTime?>("updatedDate")
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
 
                     b.HasIndex("ClassId");
+
+                    b.HasIndex("CreatedBy");
 
                     b.HasIndex("TeacherId");
 
@@ -146,16 +149,16 @@ namespace CollegeAPI.Data.Migrations
                     b.Property<string>("Address")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("CreatedBy")
+                    b.Property<int?>("CreatedBy")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("CreatedDate")
+                    b.Property<DateTime?>("CreatedDate")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Email")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("IsActive")
+                    b.Property<int?>("IsActive")
                         .HasColumnType("int");
 
                     b.Property<string>("Name")
@@ -164,35 +167,96 @@ namespace CollegeAPI.Data.Migrations
                     b.Property<string>("Phone")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("UpdatedBy")
+                    b.Property<int?>("UpdatedBy")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("updatedDate")
+                    b.Property<DateTime?>("updatedDate")
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
 
+                    b.HasIndex("CreatedBy");
+
                     b.ToTable("teacher");
+                });
+
+            modelBuilder.Entity("CollegeAPI.Data.Models.Users", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Address")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("CreatedBy")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Email")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("IsActive")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Password")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Phone")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("UpdatedBy")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("updatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CreatedBy");
+
+                    b.ToTable("users");
+                });
+
+            modelBuilder.Entity("CollegeAPI.Data.Models.Classes", b =>
+                {
+                    b.HasOne("CollegeAPI.Data.Models.Users", "UserCreated")
+                        .WithMany()
+                        .HasForeignKey("CreatedBy");
+
+                    b.Navigation("UserCreated");
                 });
 
             modelBuilder.Entity("CollegeAPI.Data.Models.Student", b =>
                 {
                     b.HasOne("CollegeAPI.Data.Models.Classes", "classes")
                         .WithMany()
-                        .HasForeignKey("ClassId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("ClassId");
+
+                    b.HasOne("CollegeAPI.Data.Models.Users", "UserCreated")
+                        .WithMany()
+                        .HasForeignKey("CreatedBy");
 
                     b.Navigation("classes");
+
+                    b.Navigation("UserCreated");
                 });
 
             modelBuilder.Entity("CollegeAPI.Data.Models.Subject", b =>
                 {
                     b.HasOne("CollegeAPI.Data.Models.Classes", "classes")
                         .WithMany()
-                        .HasForeignKey("ClassId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("ClassId");
+
+                    b.HasOne("CollegeAPI.Data.Models.Users", "UserCreated")
+                        .WithMany()
+                        .HasForeignKey("CreatedBy");
 
                     b.HasOne("CollegeAPI.Data.Models.Teacher", "teacher")
                         .WithMany()
@@ -203,6 +267,26 @@ namespace CollegeAPI.Data.Migrations
                     b.Navigation("classes");
 
                     b.Navigation("teacher");
+
+                    b.Navigation("UserCreated");
+                });
+
+            modelBuilder.Entity("CollegeAPI.Data.Models.Teacher", b =>
+                {
+                    b.HasOne("CollegeAPI.Data.Models.Users", "UserCreated")
+                        .WithMany()
+                        .HasForeignKey("CreatedBy");
+
+                    b.Navigation("UserCreated");
+                });
+
+            modelBuilder.Entity("CollegeAPI.Data.Models.Users", b =>
+                {
+                    b.HasOne("CollegeAPI.Data.Models.Users", "UserCreated")
+                        .WithMany()
+                        .HasForeignKey("CreatedBy");
+
+                    b.Navigation("UserCreated");
                 });
 #pragma warning restore 612, 618
         }

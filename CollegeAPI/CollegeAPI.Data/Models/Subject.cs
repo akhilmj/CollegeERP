@@ -9,9 +9,9 @@ namespace CollegeAPI.Data.Models
         public int TeacherId { get; set; } 
         [ForeignKey("TeacherId")]
         public Teacher teacher { get; set; }
-        public int ClassId { get; set; }    
+        public int? ClassId { get; set; }    
         [ForeignKey("ClassId")]
-        public Classes classes { get; set; }
+        public virtual Classes classes { get; set; }
         
     }
 }

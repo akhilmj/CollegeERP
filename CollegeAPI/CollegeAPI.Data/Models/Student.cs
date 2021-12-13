@@ -9,9 +9,9 @@ namespace CollegeAPI.Data.Models
         public string Address { get; set; }        
         public string Phone { get; set; }        
         public string Email { get; set; }
-        public int ClassId { get; set; }
+        public int? ClassId { get; set; }
         [ForeignKey("ClassId")]
-        public Classes classes { get; set; }
+        public virtual Classes classes { get; set; }
                     
     }
 }

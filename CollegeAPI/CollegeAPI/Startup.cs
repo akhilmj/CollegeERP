@@ -13,6 +13,11 @@ using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using Microsoft.EntityFrameworkCore;
 using CollegeAPI.Data.DBConnection;
+using CollegeAPI.Contracts;
+using CollegeAPI.Repository;
+using CollegeAPI.Extensions;
+using Microsoft.AspNetCore.Mvc.NewtonsoftJson;
+using System.Text.Json.Serialization;
 
 namespace CollegeAPI
 {
@@ -24,16 +29,23 @@ namespace CollegeAPI
         }
 
         public IConfiguration Configuration { get; }
-
+        
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            ModelDependency.ConfigureServices(services);
             services.AddDbContext<ApplicationContext>(options => options.UseSqlServer(Configuration.GetConnectionString("AppConnection")));
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "CollegeAPI", Version = "v1" });
-            });
+            });   
+            services.AddCors(o => o.AddPolicy("MyPolicy", builder =>
+            {
+                builder.AllowAnyOrigin()
+                    .AllowAnyMethod()
+                    .AllowAnyHeader();
+            }));            
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -45,7 +57,7 @@ namespace CollegeAPI
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "CollegeAPI v1"));
             }
-
+            app.UseCors("MyPolicy");
             app.UseHttpsRedirection();
 
             app.UseRouting();
