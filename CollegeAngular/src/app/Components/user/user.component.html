@@ -8,6 +8,8 @@
         <th scope="col">Phone</th>
         <th scope="col">Email</th>
         <th scope="col">Phone</th>
+        <th class="text-center" scope="col">Edit</th>
+        <th class="text-center" scope="col">Delete</th>
       </tr>
     </thead>
     <tbody>
@@ -18,11 +20,13 @@
         <td>{{user.phone}}</td>
         <td>{{user.email}}</td>
         <td>{{user.phone}}</td>
+        <td class="text-center"><i  (click)="onEdit(user)" class="bi bi-pencil-square"></i></td>
+        <td class="text-center"><i (click)="onDelete(user.id)" class="bi bi-trash"></i></td>
       </tr>     
     </tbody>
   </table>
 <div class="clg-aling-right">
-    <a class="btn btn-primary" href="#" role="button">Add +</a>
+    <a class="btn btn-outline-primary" (click)="addUser()" role="button"> <i class="bi bi-person-plus"></i> Add</a>
 </div>
   
 </div>

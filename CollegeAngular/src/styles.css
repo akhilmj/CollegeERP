@@ -1,4 +1,5 @@
 /* You can add global styles to this file, and also import other style files */
+@import url("https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css");
 *{
     padding: 0;
     margin: 0;
@@ -7,4 +8,15 @@
 .clg-aling-right
 {
     float: right;
+}
+.btn {
+    min-width: 100px;
+}
+.bi-pencil-square{
+    color: #08f95d;
+    cursor: pointer;
+}
+.bi-trash{
+    color: red;
+    cursor: pointer;
 }
