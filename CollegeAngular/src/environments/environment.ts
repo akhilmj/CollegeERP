@@ -4,8 +4,13 @@
 
 export const environment = {
   production: false,
-  baseURL :'https://localhost:5001/api/'
+  baseURL :'https://localhost:44372/api/'
 };
+export const validators = {
+  email:'^([a-zA-Z0-9+_.-]+)@([a-zA-Z0-9]+).([a-zA-Z]{3,5})$',
+  phone :'^(\\+[0-9]{2}\\s+)([0-9]{10})$',
+  password: '^((?=.*\\d)(?=.*[A-Z])(?=.*[a-z])(?=.*[!#@$%&? "])([a-zA-Z0-9!#$%&?@]{8,20}))$'
+}
 
 /*
  * For easier debugging in development mode, you can import the following file

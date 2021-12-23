@@ -1,5 +1,10 @@
 <app-header></app-header>
 <div class="Container">
-<router-outlet></router-outlet>
+<div class="loading-overlay" *ngIf="loading">
+    <img src="../assets/images/57579327-0-Loaders-3.svg"/>
+</div>
+<div *ngIf="!loading">
+    <router-outlet></router-outlet>
+</div>
 </div>
 <app-footer></app-footer>

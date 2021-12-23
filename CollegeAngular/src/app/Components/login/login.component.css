@@ -1,0 +1,24 @@
+.logInForm-outer{
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+    height: 100%;
+    min-height: calc(100vh - 200px);
+    color: #fff;
+}
+.logInForm{    
+    width: 400px;
+    display: block;
+    padding: 30px;
+    background: linear-gradient(270deg, #b54b4b, #bdbd5e);
+    border-radius: 2px
+px
+;
+}
+.btn{
+    margin-top: 15px;
+}
+.logInForm input{
+    background: transparent;
+ }

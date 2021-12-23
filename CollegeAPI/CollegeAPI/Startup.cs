@@ -1,23 +1,17 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+
+using System.Buffers;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using Microsoft.EntityFrameworkCore;
 using CollegeAPI.Data.DBConnection;
-using CollegeAPI.Contracts;
-using CollegeAPI.Repository;
 using CollegeAPI.Extensions;
-using Microsoft.AspNetCore.Mvc.NewtonsoftJson;
-using System.Text.Json.Serialization;
+using Microsoft.IdentityModel.Tokens;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using System.Text;
 
 namespace CollegeAPI
 {
@@ -29,21 +23,39 @@ namespace CollegeAPI
         }
 
         public IConfiguration Configuration { get; }
-        
+
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            ModelDependency.ConfigureServices(services);
-            services.AddDbContext<ApplicationContext>(options => options.UseSqlServer(Configuration.GetConnectionString("AppConnection")));
-            services.AddControllers();
-            services.AddSwaggerGen(c =>
+            services.AddMvc();
+            ModelDependency.ConfigureServices(services); /*repository Dependency*/
+            services.AddDbContext<ApplicationContext>(options => options.UseSqlServer(Configuration.GetConnectionString("AppConnection"))); /*SQL Dependency*/
+           
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)    
+                    .AddJwtBearer(options =>    
+                    {    
+                        options.TokenValidationParameters = new TokenValidationParameters    
+                        {    
+                            ValidateIssuer = true,    
+                            ValidateAudience = true,    
+                            ValidateLifetime = true,    
+                            ValidateIssuerSigningKey = true,    
+                            ValidIssuer = Configuration["Jwt:Issuer"],    
+                            ValidAudience = Configuration["Jwt:Issuer"],    
+                            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["Jwt:Key"]))    
+                        };    
+                    });                      
+            
+             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "CollegeAPI", Version = "v1" });
-            });   
-            services.AddCors(o => o.AddPolicy("MyPolicy", builder =>
-            {
-                builder.AllowAnyOrigin().WithOrigins("http://localhost:4200")  .WithMethods("GET", "POST", "DELETE","PUT").AllowAnyMethod().AllowAnyHeader();                
-            }));        
+                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "CollegeAPI", Version = "v1" });
+            });
+            
+             services.AddCors(o => o.AddPolicy("MyPolicy", builder =>
+             {
+                builder.AllowAnyOrigin().WithOrigins("http://localhost:4200").WithMethods("GET", "POST", "DELETE","PUT").AllowAnyMethod().AllowAnyHeader();
+             }));
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -51,17 +63,14 @@ namespace CollegeAPI
         {
             if (env.IsDevelopment())
             {
-                app.UseDeveloperExceptionPage();
+                //app.UseDeveloperExceptionPage();
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "CollegeAPI v1"));
             }
-            app.UseCors("MyPolicy");
-            app.UseHttpsRedirection();
-
+            app.UseCors("MyPolicy");  /* For acces outside the host*/           
             app.UseRouting();
-
-            app.UseAuthorization();
-
+            app.UseAuthentication();
+            app.UseAuthorization();          
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
